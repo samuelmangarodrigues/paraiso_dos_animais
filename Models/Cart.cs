@@ -7,6 +7,5 @@
         public IEnumerable<ProductCart> ProductCarts { get; set; } = [];
         public List<Product> Products { get; set; } = [];
 
-
     }
 }

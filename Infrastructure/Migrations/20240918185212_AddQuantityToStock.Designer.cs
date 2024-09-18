@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ParaisoDosAnimais.Context;
+using ParaisoDosAnimais.Infrastructure.Context;
+
 
 #nullable disable
 
 namespace ParaisoDosAnimais.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240918185412_AddPriceToStock")]
-    partial class AddPriceToStock
+    [Migration("20240918185212_AddQuantityToStock")]
+    partial class AddQuantityToStock
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -191,14 +192,11 @@ namespace ParaisoDosAnimais.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

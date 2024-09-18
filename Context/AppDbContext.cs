@@ -8,10 +8,17 @@ namespace ParaisoDosAnimais.Context
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<ProductCart> ProductCarts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=app.sqlite");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite("Data Source=app.sqlite");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

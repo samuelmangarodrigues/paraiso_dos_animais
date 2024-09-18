@@ -7,7 +7,7 @@ namespace ParaisoDosAnimais.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController :ControllerBase
+    public class ClientController : ControllerBase
     {
         // GET: api/<ClientController>
         [HttpGet]
@@ -29,7 +29,7 @@ namespace ParaisoDosAnimais.Controllers
 
         // POST api/<ClientController>
         [HttpPost]
-        
+
         public IActionResult Post([FromBody] Client client)
         {
 

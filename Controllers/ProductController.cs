@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParaisoDosAnimais.Models;
+using ParaisoDosAnimais.Services;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ParaisoDosAnimais.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    public class ProductController :ControllerBase
+    public class ProductController(ProductService productService) :ControllerBase
     {
-        // GET: api/<ValuesController>
+        private readonly ProductService _productService = productService;
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -17,7 +19,6 @@ namespace ParaisoDosAnimais.Controllers
             return Ok(products);
         }
 
-        // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -26,7 +27,6 @@ namespace ParaisoDosAnimais.Controllers
             return Ok(product);
         }
 
-        // POST api/<ValuesController>
         [HttpPost]
         public IActionResult Post([FromBody] string value)
         {
@@ -40,7 +40,6 @@ namespace ParaisoDosAnimais.Controllers
             return Ok("Product updated");
         }
 
-        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

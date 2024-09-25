@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParaisoDosAnimais.Infrastructure.Context;
 
@@ -10,12 +11,29 @@ using ParaisoDosAnimais.Infrastructure.Context;
 namespace ParaisoDosAnimais.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240920185012_AddNewRlsp")]
+    partial class AddNewRlsp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.Property<Guid>("CartsId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CartsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CartProduct");
+                });
 
             modelBuilder.Entity("ParaisoDosAnimais.Models.Address", b =>
                 {
@@ -25,12 +43,10 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("ClientId")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Neighborhood")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Number")
@@ -38,12 +54,10 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -61,7 +75,6 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("ClientId")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("TotalValue")
@@ -83,7 +96,6 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -116,7 +128,6 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -159,12 +170,10 @@ namespace ParaisoDosAnimais.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -216,6 +225,21 @@ namespace ParaisoDosAnimais.Migrations
                         .IsUnique();
 
                     b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.HasOne("ParaisoDosAnimais.Models.Cart", null)
+                        .WithMany()
+                        .HasForeignKey("CartsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ParaisoDosAnimais.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ParaisoDosAnimais.Models.Address", b =>
@@ -295,15 +319,15 @@ namespace ParaisoDosAnimais.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Cart")
-                        .IsRequired();
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("ParaisoDosAnimais.Models.Product", b =>
                 {
                     b.Navigation("ProductCarts");
 
-                    b.Navigation("Stock");
+                    b.Navigation("Stock")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

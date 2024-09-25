@@ -1,13 +1,17 @@
-﻿namespace ParaisoDosAnimais.Models
-{
-    public class Product(string name, string description):BaseModel
-    {
-        public string Name { get; set; } = name;
-        public string Description { get; set; } = description;
-        public Stock? Stock { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
+using ParaisoDosAnimais.Services;
 
-        public IEnumerable<ProductCart> ProductCarts { get; set; } = [];
-        public List<Cart> Carts { get; set; } = [];
+namespace ParaisoDosAnimais.Models
+{
+    public class Product(string name, string description) : BaseModel
+    {
+        
+        [Required,MaxLength(255)] public string Name { get; set; } = name;
+        [Required,MaxLength(255)] public string Description { get; set; } = description;
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; } = null!;
+        public Stock? Stock { get; set; } 
+        public List<ProductCart> ProductCarts { get; set; } = [];
 
     }
 }

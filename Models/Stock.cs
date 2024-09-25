@@ -1,12 +1,11 @@
 ﻿namespace ParaisoDosAnimais.Models
 {
-    public class Stock:BaseModel
+    public class Stock : BaseModel
     {
-        public Guid ProductId { get; set; }
-        public Product? Product { get; set; }
+        public Guid ProductId { get; init; }
+        public Product Product { get; init; } = null!;
 
-        public int? Quantity { get; set; }
-        public decimal? Price { get; set; }
-
+        public required int Quantity { get; set; }
+        public required decimal Price { get; set; }
     }
 }

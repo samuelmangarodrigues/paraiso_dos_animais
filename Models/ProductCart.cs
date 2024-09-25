@@ -1,11 +1,12 @@
 ﻿namespace ParaisoDosAnimais.Models
 {
-    public class ProductCart:BaseModel
+    public class ProductCart : BaseModel
     {
-        public string? ProductId { get; init; }
-        public string? CartId { get; init; }
-        public Product? Product { get; set; }
-        public Cart? Cart { get; set; }
+
+        public  Guid ProductId { get; init; }
+        public  Guid CartId { get; init; }
+        public Product Product { get; init; } = null!;
+        public  Cart Cart { get; init; } = null!;
+
     }
 }
-    

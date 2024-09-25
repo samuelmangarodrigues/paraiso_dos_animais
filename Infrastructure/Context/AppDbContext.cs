@@ -2,7 +2,7 @@
 using ParaisoDosAnimais.Models;
 using Microsoft.EntityFrameworkCore.Sqlite;
 
-namespace ParaisoDosAnimais.Context
+namespace ParaisoDosAnimais.Infrastructure.Context
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
@@ -12,6 +12,8 @@ namespace ParaisoDosAnimais.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<ProductCart> ProductCarts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,14 +41,19 @@ namespace ParaisoDosAnimais.Context
                 .HasForeignKey<Cart>(ca => ca.ClientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            //Relacionamento 1:N entre Product e Category ->
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
+
             //Relacionamento 1:1 entre Product e Stock ->
             modelBuilder.Entity<Product>()
-                .HasOne(p=> p.Stock)
-                .WithOne(s=> s.Product)
+                .HasOne(p => p.Stock)
+                .WithOne(s => s.Product)
                 .HasForeignKey<Stock>(s => s.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
-
     }
 }

@@ -1,16 +1,23 @@
-using Microsoft.EntityFrameworkCore;
-using ParaisoDosAnimais.Context;
+using ParaisoDosAnimais.Infrastructure.Context;
+using ParaisoDosAnimais.Services;
+using ParaisoDosAnimais.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<AppDbContext>();
+
 builder.Services.AddApplicationInsightsTelemetry();
+
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();
 

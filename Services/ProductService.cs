@@ -1,57 +1,40 @@
-﻿using Microsoft.CodeAnalysis;
-using ParaisoDosAnimais.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+//using ParaisoDosAnimais.Dtos;
 using ParaisoDosAnimais.Infrastructure.Context;
 using ParaisoDosAnimais.Models;
+using ParaisoDosAnimais.Services.Interfaces;
 using ParaisoDosAnimais.Services.Validations;
+using System.Xml.Linq;
 
-namespace ParaisoDosAnimais.Services
+
+namespace ParaisoDosAnimais.Services;
+
+public class ProductService(AppDbContext appDbContext, CategoryService categoryService)
 {
-    public class ProductService(AppDbContext appDbContext)
+    private readonly AppDbContext _productDbContext = appDbContext;
+    private readonly CategoryService _categoryService = categoryService;
+
+    public void CreateProduct(string name, string description, Guid categoryId, int quantity, decimal price)
     {
-        private readonly AppDbContext _appDbContext = appDbContext;
+    }
 
+    public void GetAllProducts()
+    {
+    }
 
-        public void CreateProduct(Product product, Stock stock) {
+    public void GetProductById(Guid id)
+    {
 
-            product.Stock= stock;
+    }
 
-            if (stock != null) { 
-                _appDbContext.Products.Add(product);
-                _appDbContext.SaveChanges();
-            }
-        
-        }
+    public bool UpdateProduct(Guid productId, string productDto)
+    {
+        return false;
+    }
 
-        public List<Product> GetAllProducts() => [.. _appDbContext.Products];
+    public bool DeleteProduct(Guid productId)
+    {
 
-        public Product? GetProductById(Guid id) => _appDbContext.Products.Find(id);
-
-        public bool UpdateProduct(Guid id, ProductDtos productDto)
-        {
-            var existingProduct = _appDbContext.Products.FirstOrDefault(p => p.Id == id);
-
-            if (existingProduct == null)
-                return false;
-
-            var validations = new ProductValidations();
-            validations.ValidateFieldsUpdate(existingProduct, productDto);
-
-            _appDbContext.SaveChanges();
-
-            return true;
-        }
-
-        public bool DeleteProduct(Guid id) 
-        { 
-            var existingProduct = _appDbContext.Products.FirstOrDefault(p => p.Id == id);
-
-            if (existingProduct == null) 
-                return false;
-
-            _appDbContext.Products.Remove(existingProduct);
-            _appDbContext.SaveChanges();
-
-            return true;
-        }
+        return true;
     }
 }
